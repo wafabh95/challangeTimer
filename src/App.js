@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Times from './components/Times';
 
 function App() {
+  const [timeMs, setTimeMs] = useState(0)
+  const [inter, setInter] = useState(false)
+
+useEffect(() => {
+
+  const interval = setInterval(() => { inter &&
+    setTimeMs(timeMs + 1000);
+  }, 1000);
+return ()=>clearInterval(interval);
+  
+  
+}, );
+ const start = () => {
+  if (!inter){
+      setInter(true)
+  } else {
+      setInter(false)
+  }   
+  }
+  const reset = () => {
+    setTimeMs(0)
+    setInter(false)
+}   
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="">
+      <div className='buttons'>
+                <Times ms={timeMs} />
+                <input type='button' value={inter ? 'Pause' : 'Start'} className='startButton' onClick={start} />
+                <input type='button' value='Reset' className='resetButton' onClick={reset} />
+            </div>
     </div>
   );
 }
-
 export default App;
